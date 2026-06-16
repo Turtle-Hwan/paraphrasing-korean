@@ -1,0 +1,73 @@
+---
+name: paraphrasing-korean
+description: 한국어 문장을 문장 단위로 첨삭·윤문하는 통합 명령. 번역투 → AI 티 → 문장 다이어트를 순서대로 한 문장씩 적용해, 뜻은 한 글자도 바꾸지 않고 군더더기만 덜어 낸다. 트리거 — "한국어 첨삭", "문장 윤문", "글 다듬어줘", "paraphrasing korean", "문장 다이어트", "번역투+AI티 같이 다듬어줘". 문장 다이어트 규칙은 책 『내 문장이 그렇게 이상한가요?』에서 영감을 받았다. 세부 명령 — 문장 다이어트만: -센텐스 / 번역투만: -trans / AI 티만: -ai.
+---
+
+# paraphrasing-korean — 통합 첨삭/윤문 (번역투 → AI 티 → 센텐스)
+
+한국어 텍스트를 **문장 부호 단위로 잘라** 한 문장씩 다듬는다. grep/정규식으로 일괄 치환하지 않고,
+워크시트의 각 문장 행을 읽고 in/out 윤문한다. 뜻·수치·고유명사·인용은 보존한다.
+문장 다이어트 규칙은 책 『내 문장이 그렇게 이상한가요?』에서 영감을 받았다.
+
+스킬 디렉토리를 `$SKILL` 로 표기한다(Claude Code: `${CLAUDE_SKILL_DIR}` 또는
+`${CLAUDE_PLUGIN_ROOT}`; 그 외 하니스: 이 SKILL.md 가 있는 폴더).
+
+## 절차
+
+**Phase 0 — 상태 한 줄**
+```
+paraphrasing-korean (통합: 번역투→AI티→센텐스) / run_id: {YYYY-MM-DD-NNN}
+```
+run_id 는 cwd 기준 `_workspace/{YYYY-MM-DD-NNN}/`. 당일 폴더가 있으면 NNN+1.
+
+**Phase 1 — 입력 저장**
+입력 텍스트(또는 파일)를 `_workspace/{run_id}/01_input.txt` 로 저장.
+
+**Phase 2 — 문장 분절 (유일한 비-LLM 도구)**
+```
+python3 $SKILL/scripts/segment.py _workspace/{run_id}/01_input.txt --outdir _workspace/{run_id}
+```
+→ `segments.json`(원본 구조 정보) + `worksheet.md`(작업 파일) 생성. 나온 문장 수 N 을 확인.
+
+**Phase 2.5 — 정규식 후보 힌트 (선택)**
+```
+python3 $SKILL/scripts/scan.py _workspace/{run_id}/worksheet.md
+```
+워크시트의 각 문장에 의심 규칙 ID를 `힌트:` 줄로 단다. 어디까지나 참고이며 오탐이 있다.
+힌트가 없는 문장도 직접 읽고 판단한다(힌트가 윤문을 대신하지 않는다). 건너뛰어도 된다.
+
+**Phase 3 — 룰북 로드 (세 개 모두)**
+순서대로 적용한다:
+1. [번역투] `$SKILL/references/translationese-rules.md`
+2. [AI 티] `$SKILL/references/ai-tell-rules.md`
+3. [센텐스] `$SKILL/references/sentence-rules.md`
+
+공통 규칙: `$SKILL/references/prime-directives.md` (의미 불변·Do-NOT·변경률·자체검증).
+
+**Phase 4 — 워크시트 행별 윤문 (grep 금지)**
+`worksheet.md` 의 각 `prose` 블록을 위에서 아래로 처리한다. 한 문장에:
+- 번역투 → AI 티 → 센텐스 순으로 룰을 적용해 **윤문:** 줄을 채운다.
+- **규칙:** 줄에 적용한 ID(T-2, AI-3, S-1 …)를 적는다. 바꿀 게 없으면 윤문에 원문을 그대로 옮기고 규칙은 `변경없음`.
+- 행을 합치거나 나누거나 순서를 바꾸지 않는다. `structure` 블록은 절대 건드리지 않는다.
+- Do-NOT(수치·고유명사·직접 인용·영어 약어·법령)은 보존한다. 뜻이 흔들리면 원문을 유지한다.
+
+**Phase 5 — 재조립 + 가드**
+```
+python3 $SKILL/scripts/reassemble.py _workspace/{run_id}/segments.json _workspace/{run_id}/worksheet.md --out _workspace/{run_id}/final.md
+```
+- 카운트 불일치(exit 2) → 누락/병합된 문장을 워크시트에서 고치고 다시 실행.
+- 변경률 50% 초과(exit 3) → 과윤문. 보수적으로 다시 다듬는다.
+
+**Phase 6 — 반환**
+1. 한 줄 상태: `완료. {N}문장 / 변경 {k}건 / 변경률 {x}% / 등급 {A~D}`
+2. before→after 표(바뀐 문장만: 원문 · 윤문 · 규칙)
+3. `final.md` 본문
+4. 자체검증 6항 결과(prime-directives §6)
+
+## 옵션 (자연어로 인자 끝에)
+- `장르: 칼럼|리포트|블로그|공적` — 말투/장르 보존 기준(생략 시 자동 추정)
+- `강도: 보수|기본|적극` — 윤문 강도(기본값: 기본)
+
+## 주의
+- 의미 불변이 최상위. 수치·고유명사·인용 불가침.
+- 통합 명령은 세 룰북을 다 쓴다. 하나만 원하면 `-trans` / `-ai` / `-센텐스` 명령을 쓴다.
