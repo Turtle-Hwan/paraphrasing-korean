@@ -28,6 +28,12 @@
     { "id": "T-18", "name": "진행형 ~하는 중", "rulebook": "trans", "regex": "는\\s*중(이다|입니다|이었|인)" },
     { "id": "T-19", "name": "완료 ~해 왔다", "rulebook": "trans", "regex": "[아어여해]\\s*왔(다|습니다|던|어)" },
     { "id": "T-27", "name": "부정관사 하나의", "rulebook": "trans", "regex": "하나의\\s" },
-    { "id": "T-29", "name": "~에 있어", "rulebook": "trans", "regex": "에\\s*있어" }
+    { "id": "T-29", "name": "~에 있어", "rulebook": "trans", "regex": "에\\s*있어" },
+    { "id": "G-1", "name": "예요/에요", "rulebook": "grammar", "regex": "(?<!아니)에요" },
+    { "id": "G-2", "name": "됬→됐", "rulebook": "grammar", "regex": "됬" },
+    { "id": "G-14", "name": "굳어진 오타", "rulebook": "grammar", "regex": "(역활|설레임|오랫만에|희안|구지|닥달|으례|금새|폭팔|왠만|어의없|잠궜|담궜)" },
+    { "id": "G-15", "name": "-ㄹ께", "rulebook": "grammar", "regex": "(할께|갈께|줄께|볼께|올께|들께|놀께)" },
+    { "id": "AI-28", "name": "AI 군더더기 어휘", "rulebook": "ai", "regex": "(좋은 질문입니다|간단히 말하자면|결론적으로 말하자면)" },
+    { "id": "ST-3", "name": "사물존칭", "rulebook": "style", "regex": "(나오셨습니다|나오셨어요|품절이십니다|이십니다)" }
   ]
 }
