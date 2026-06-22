@@ -27,33 +27,9 @@
 
 ## 무엇을 손보나요
 
-다섯 가지를 이렇게 바꿔요.
+다섯 가지를 손봐요. **맞춤법·경어법 · 번역 문체 · AI 문체 · 문장 간소화 · 문체.** 뜻은 한 글자도 바꾸지 않고, 문장 단위로 한 줄씩 다듬어요.
 
-- **맞춤법·경어법**
-
-  `도구에요 → 도구예요` · `잘 됬다 → 잘 됐다` · `몇일 → 며칠` · `커피 나오셨습니다 → 커피 나왔습니다`
-
-- **번역 문체**
-
-  `경쟁력을 가지고 있다 → 경쟁력이 강하다` · `분석을 통해 얻어진 결과 → 분석해 얻은 결과`
-
-- **AI 문체**
-
-  `결국, 중요한 것은 적응하는 것이라고 할 수 있습니다 → 적응이 가장 중요합니다`
-
-  `이것은 단순한 앱이 아니라 삶의 방식입니다 → 이 앱은 일상을 바꿔 줘요`
-
-- **문장 간소화**
-
-  `사회적 현상 → 사회 현상` · `눈으로 덮여 있는 마을 → 눈으로 덮인 마을` · `잊혀지지 → 잊히지`
-
-- **문체**
-
-  한 글에서 종결문체나 반말·존댓말을 섞지 않아요.
-
-  `있어요 … 정리했습니다 → 있어요 … 정리했어요`
-
-  `알려줄게 … 참고 바랍니다 → 알려드릴게요 … 참고 바랍니다`
+![무엇을 손보나요 — 맞춤법·경어법(커피 나오셨습니다 → 나왔습니다), 번역 문체(가지고 있다 → 강하다), AI 문체(단순한 ~가 아니라 → 단언), 문장 간소화(덮여 있는 → 덮인), 문체(종결 통일)를 before→after로 보여 주는 예시](docs/what-we-fix.png)
 
 ## 명령어
 
@@ -71,30 +47,40 @@
 
 ## 설치
 
-여러 AI 도구에서 그대로 써요. Claude Code · Codex · OpenClaw · Hermes · Gemini CLI 를 지원해요.
+한 번 깔면 **Claude Code · Codex · OpenClaw · Hermes · Gemini CLI** 어디서나 그대로 써요.
+`./install.sh` 가 설치된 도구를 스스로 찾아 연결해요(심링크 기본, `git pull` 로 갱신).
 
-**Claude Code — 한 줄 설치**
+```bash
+git clone https://github.com/Turtle-Hwan/im-ai-copyeditor
+cd im-ai-copyeditor
+./install.sh            # 깔려 있는 도구를 자동으로 찾아 모두 연결
+```
+
+도구마다 어디에 깔리고 어떻게 부르는지:
+
+| 도구 | 설치 | 부르는 법 |
+|---|---|---|
+| **Claude Code** | `./install.sh` → `~/.claude/skills/` (또는 아래 마켓플레이스) | `/im-ai-copyeditor:all` · "이 글 다듬어줘" |
+| **Codex** | `./install.sh` → `~/.codex/skills/` · `~/.agents/skills/` | "이 글 문장 다듬어줘" |
+| **OpenClaw** | `./install.sh` → `~/.openclaw/skills/` · `~/.agents/skills/` | "이 글 문장 다듬어줘" |
+| **Hermes** | `./install.sh` → `~/.hermes/skills/writing/` | "이 글 문장 다듬어줘" |
+| **Gemini CLI** | `./install.sh` → `gemini extensions link` | `/im-ai-copyeditor` |
+
+**Claude Code — 클론 없이 한 줄 설치 (마켓플레이스)**
 
 ```
 /plugin marketplace add Turtle-Hwan/im-ai-copyeditor
 /plugin install im-ai-copyeditor@im-ai-copyeditor
 ```
 
-**클론 + 스크립트 — 모든 도구**
-
-```bash
-git clone https://github.com/Turtle-Hwan/im-ai-copyeditor
-cd im-ai-copyeditor
-./install.sh            # 설치돼 있는 도구를 스스로 찾아 설치
-```
-
-`./install.sh` 는 기본으로 심링크를 걸어요. `git pull` 만 하면 최신으로 갱신돼요. 복사로 설치하려면
-`--copy` 를 붙여요. 특정 도구만 설치하려면 `--claude-only` 처럼 써요.
+**옵션** — 특정 도구만: `--claude-only` · `--codex-only` · `--openclaw-only` · `--hermes-only` · `--gemini-only` / 심링크 대신 복사: `--copy` / 미리보기: `--dry-run`
 
 ```bash
 ./update.sh             # 새 버전 확인하고 적용
 ./uninstall.sh          # 설치 제거
 ```
+
+설치한 뒤 새 세션에서 슬래시 명령(`/im-ai-copyeditor:all`)으로 부르거나, 그냥 **"이 글 문장 다듬어줘"** 처럼 말해도 알아서 골라 줘요.
 
 ## 동작 방식
 
