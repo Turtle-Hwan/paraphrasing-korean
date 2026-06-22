@@ -1,10 +1,24 @@
 #!/usr/bin/env bash
 # im-ai-copyeditor — 여러 AI 도구에 한 번에 설치하는 스크립트.
-# 저장소를 클론한 뒤 `./install.sh` 한 번이면 설치돼 있는 도구(claude/codex/openclaw/hermes/gemini)를
-# 스스로 찾아 스킬을 연결한다. 기본은 심링크(저장소를 고치면 바로 반영, `git pull` 로 갱신).
+# `./install.sh` 한 번이면 설치돼 있는 도구(claude/codex/openclaw/hermes/gemini)를 스스로 찾아 스킬을
+# 연결한다. 기본은 심링크(저장소를 고치면 바로 반영, `git pull` 로 갱신).
+# 저장소 없이 바로 실행해도 된다:  curl -fsSL <…>/main/install.sh | bash  (공개 저장소를 받아 설치).
 set -euo pipefail
 
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# 저장소 밖에서 실행되면(예: curl … | bash) 공개 저장소를 받아 거기서 다시 실행한다.
+if [ ! -d "$REPO/skills" ]; then
+  DEST="${IM_AI_COPYEDITOR_HOME:-$HOME/.im-ai-copyeditor}"
+  echo "저장소를 받는 중… ($DEST)"
+  if [ -d "$DEST/.git" ]; then
+    git -C "$DEST" pull --ff-only --quiet || true
+  else
+    git clone --depth 1 --quiet https://github.com/Turtle-Hwan/im-ai-copyeditor "$DEST"
+  fi
+  exec bash "$DEST/install.sh" "$@"
+fi
+
 SKILLS_SRC="$REPO/skills"
 CLAUDE_HOME="${CLAUDE_HOME:-$HOME/.claude}"
 CODEX_HOME="${CODEX_HOME:-$HOME/.codex}"

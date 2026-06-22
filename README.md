@@ -2,10 +2,13 @@
 
 > **AI copyeditor for Korean.** 글이 AI든 사람이든, 진짜 교정·교열가처럼 한 문장 한 문장 꼼꼼히 첨삭해요.
 
-한국어 글을 다듬는 도구예요. **뜻은 한 글자도 바꾸지 않아요.** 군더더기와 어색함만 덜어 내요.
+한국어 글을 다듬어주는 도구예요. 영어 번역체와 AI 챗봇 같은 말투에서 군더더기와 어색함을 덜어내어 사람이 읽기 좋은 문장으로 바꾸어줘요.
 
-오직 한국어만을 위해 만들었어요. 영어를 옮긴 듯한 말투와 챗봇 같은 말투를 걷어 내고, 한국인이
-읽기에 자연스러운 문장으로 되돌려요.
+## 무엇을 손보나요
+
+다섯 가지를 손봐요. **맞춤법·경어법 · 번역 문체 · AI 문체 · 문장 간소화 · 문체.** 뜻은 한 글자도 바꾸지 않고, 문장 단위로 한 줄씩 다듬어요.
+
+![무엇을 손보나요 — 맞춤법·경어법(커피 나오셨습니다 → 나왔습니다), 번역 문체(가지고 있다 → 강하다), AI 문체(단순한 ~가 아니라 → 단언), 문장 간소화(적·의·것·들: 환경적 요인의 → 환경 요인 · 덮여 있는 → 덮인), 문체(종결 통일)를 before→after로 보여 주는 예시](docs/what-we-fix.png)
 
 ## 이런 점이 달라요
 
@@ -19,17 +22,11 @@
 
 - **문장 교정은 책에서 영감을 받았어요.**
 
-  문장을 교정하는 것은 책 [『내 문장이 그렇게 이상한가요?』](https://product.kyobobook.co.kr/detail/S000001863138)에서 영감을 받아 더했어요.
+  문장 교정 규칙은 책 [『내 문장이 그렇게 이상한가요?』](https://product.kyobobook.co.kr/detail/S000001863138)에서 영감을 받아 더했어요.
 
 - **한국어 특화 스킬이에요.**
 
   규칙은 국립국어원 어문 규범과 번역학·문체 논문에 근거해요.
-
-## 무엇을 손보나요
-
-다섯 가지를 손봐요. **맞춤법·경어법 · 번역 문체 · AI 문체 · 문장 간소화 · 문체.** 뜻은 한 글자도 바꾸지 않고, 문장 단위로 한 줄씩 다듬어요.
-
-![무엇을 손보나요 — 맞춤법·경어법(커피 나오셨습니다 → 나왔습니다), 번역 문체(가지고 있다 → 강하다), AI 문체(단순한 ~가 아니라 → 단언), 문장 간소화(덮여 있는 → 덮인), 문체(종결 통일)를 before→after로 보여 주는 예시](docs/what-we-fix.png)
 
 ## 명령어
 
@@ -43,44 +40,51 @@
 | `/im-ai-copyeditor:trans` | 번역 문체 빼기. 피동→능동, 가지다·통해·대해, 무생물 주어, 대명사 남용 |
 | `/im-ai-copyeditor:ai` | AI 문체 빼기. 첫째·둘째 나열, 결말 공식, 과장 어휘, 괄호·쉼표, 클리셰 |
 
-설치하면 명령어로 불러요. 그냥 "이 글 문장 다듬어줘" 처럼 말해도 알아서 골라 줘요.
+위 슬래시 명령은 **플러그인**으로 깔았을 때 떠요(아래 설치 참고). **스킬**로 깔았으면 `im-ai-copyeditor` 처럼 이름으로 부르거나, 그냥 **"이 글 문장 다듬어줘"** 라고 하면 알아서 골라 줘요.
 
 ## 설치
 
-한 번 깔면 **Claude Code · Codex · OpenClaw · Hermes · Gemini CLI** 어디서나 그대로 써요.
-`./install.sh` 가 설치된 도구를 스스로 찾아 연결해요(심링크 기본, `git pull` 로 갱신).
+### 한 줄 설치 — 가장 간편 (스킬)
 
 ```bash
-git clone https://github.com/Turtle-Hwan/im-ai-copyeditor
-cd im-ai-copyeditor
-./install.sh            # 깔려 있는 도구를 자동으로 찾아 모두 연결
+curl -fsSL https://raw.githubusercontent.com/Turtle-Hwan/im-ai-copyeditor/main/install.sh | bash
 ```
 
-도구마다 어디에 깔리고 어떻게 부르는지:
+공개 저장소를 받아 깔려 있는 도구(**Claude Code · Codex · OpenClaw · Hermes · Gemini CLI**)를 스스로 찾아 **스킬**로 연결해요. 설치 뒤 그냥 **"이 글 문장 다듬어줘"** 라고 하거나 스킬을 이름으로 불러요. 특정 도구만 깔려면 끝에 `-s -- --claude-only` 처럼 붙여요.
 
-| 도구 | 설치 | 부르는 법 |
-|---|---|---|
-| **Claude Code** | `./install.sh` → `~/.claude/skills/` (또는 아래 마켓플레이스) | `/im-ai-copyeditor:all` · "이 글 다듬어줘" |
-| **Codex** | `./install.sh` → `~/.codex/skills/` · `~/.agents/skills/` | "이 글 문장 다듬어줘" |
-| **OpenClaw** | `./install.sh` → `~/.openclaw/skills/` · `~/.agents/skills/` | "이 글 문장 다듬어줘" |
-| **Hermes** | `./install.sh` → `~/.hermes/skills/writing/` | "이 글 문장 다듬어줘" |
-| **Gemini CLI** | `./install.sh` → `gemini extensions link` | `/im-ai-copyeditor` |
-
-**Claude Code — 클론 없이 한 줄 설치 (마켓플레이스)**
+### Claude Code 플러그인 — 슬래시 명령 `/im-ai-copyeditor:all`
 
 ```
 /plugin marketplace add Turtle-Hwan/im-ai-copyeditor
 /plugin install im-ai-copyeditor@im-ai-copyeditor
 ```
 
-**옵션** — 특정 도구만: `--claude-only` · `--codex-only` · `--openclaw-only` · `--hermes-only` · `--gemini-only` / 심링크 대신 복사: `--copy` / 미리보기: `--dry-run`
+플러그인으로 깔면 `/im-ai-copyeditor:all`·`:grammar`·`:sentence`·`:trans`·`:ai` 슬래시 명령이 생겨요. (위 한 줄 설치는 **스킬**만 깔아 이름·자연어로 불러요 — 둘은 부르는 방식만 다르고, 같은 규칙을 써요.)
+
+### 도구별 설치 위치
+
+| 도구 | 어디에 깔리나 | 부르는 법 |
+|---|---|---|
+| **Claude Code** | `~/.claude/skills/` (스킬) · 마켓플레이스(플러그인) | `im-ai-copyeditor` 스킬 · `/im-ai-copyeditor:all` · "이 글 다듬어줘" |
+| **Codex** | `~/.codex/skills/` · `~/.agents/skills/` | "이 글 문장 다듬어줘" |
+| **OpenClaw** | `~/.openclaw/skills/` · `~/.agents/skills/` | "이 글 문장 다듬어줘" |
+| **Hermes** | `~/.hermes/skills/writing/` | "이 글 문장 다듬어줘" |
+| **Gemini CLI** | `gemini extensions link` (확장) | `/im-ai-copyeditor` |
+
+### 직접 클론 — 수정·개발용
 
 ```bash
-./update.sh             # 새 버전 확인하고 적용
-./uninstall.sh          # 설치 제거
+git clone https://github.com/Turtle-Hwan/im-ai-copyeditor
+cd im-ai-copyeditor
+./install.sh            # 깔린 도구를 자동 감지해 연결
 ```
 
-설치한 뒤 새 세션에서 슬래시 명령(`/im-ai-copyeditor:all`)으로 부르거나, 그냥 **"이 글 문장 다듬어줘"** 처럼 말해도 알아서 골라 줘요.
+심링크가 기본이라 `git pull` 로 갱신돼요. 옵션 — 특정 도구만 `--claude-only` 등 · 복사 `--copy` · 미리보기 `--dry-run`.
+
+```bash
+./update.sh    # 새 버전 확인·적용
+./uninstall.sh # 제거
+```
 
 ## 동작 방식
 
