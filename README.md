@@ -147,8 +147,14 @@ python3 -m unittest discover -s tests
 
 별다른 라이브러리 설치 없이 파이썬 표준 기능만 써요.
 
-## 라이선스
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=Turtle-Hwan/im-ai-copyeditor&type=Date)](https://star-history.com/#Turtle-Hwan/im-ai-copyeditor&Date)
+
+## LICENSE
 
 [MIT](LICENSE)
 
 책 내용의 저작권은 원저작자에게 있으며, 본 스킬에서 책 내용을 그대로 옮겨 싣지 않았음을 미리 밝힙니다.
+
+
