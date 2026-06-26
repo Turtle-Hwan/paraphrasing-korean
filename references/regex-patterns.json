@@ -9,7 +9,7 @@
     { "id": "G-18", "name": "-이/-히 부사", "rulebook": "grammar", "regex": "(깨끗히|곰곰히|일일히)" },
     { "id": "G-24", "name": "외래어 표기", "rulebook": "grammar", "regex": "(컨텐츠|메세지|캡쳐|디지탈|화이팅)" },
     { "id": "S-16", "name": "쉼표 과다(3개 이상)", "rulebook": "sentence", "regex": "(,[^,\\n]*){3,}" },
-    { "id": "AI-4", "name": "마크다운 볼드", "rulebook": "ai", "regex": "\\*\\*[^*\\n]+\\*\\*" },
-    { "id": "AI-4", "name": "강조용 따옴표", "rulebook": "ai", "regex": "[\"“][^\"”\\n]{1,30}[\"”]" }
+    { "id": "AI-6", "name": "마크다운 볼드", "rulebook": "ai", "regex": "\\*\\*[^*\\n]+\\*\\*" },
+    { "id": "AI-6", "name": "강조용 따옴표", "rulebook": "ai", "regex": "[\"“][^\"”\\n]{1,30}[\"”]" }
   ]
 }
