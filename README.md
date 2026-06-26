@@ -46,7 +46,7 @@ AI가 쓴 글이든 사람이 쓴 글이든, 진짜 교정·교열가처럼 한 
 
 | 명령어 | 기능 |
 |---|---|
-| `/im-ai-copyeditor:all` | **통합**. 맞춤법 → 번역 문체 → AI 문체 → 문장 간소화 → 문체를 한 문장씩 차례로 적용 |
+| `/im-ai-copyeditor:all` | **통합**. 맞춤법 → 문장(번역투·군더더기) → AI 문체 → 문체를 한 문장씩 차례로 적용 |
 | `/im-ai-copyeditor:grammar` | 맞춤법·문체 교정. 예요/되/안, 띄어쓰기, 문장 부호, 외래어 표기, 종결문체 통일, 사물존칭 |
 | `/im-ai-copyeditor:sentence` | 문장 교정. 적·의·것·들·군더더기 빼기 + 번역투(피동→능동, 가지다, 무생물 주어, 대명사·전치사) 걷어내기 |
 | `/im-ai-copyeditor:ai` | AI 문체 제거. 첫째·둘째 나열, 결말 공식, 과장 어휘, 괄호·쉼표, 클리셰 |
@@ -83,8 +83,8 @@ curl -fsSL https://raw.githubusercontent.com/Turtle-Hwan/im-ai-copyeditor/main/i
 |---|---|---|
 | **Claude Code** | 스킬 `~/.claude/skills/` · 플러그인 마켓플레이스 | `im-ai-copyeditor` 스킬 · `/im-ai-copyeditor:all` · "이 글 다듬어줘" |
 | **Codex** | `~/.codex/skills/` · `~/.agents/skills/` | "이 글 문장 다듬어줘" |
-| **OpenClaw** | `~/.openclaw/skills/` · `~/.agents/skills/` | "이 글 문장 다듬어줘" |
-| **Hermes** | `~/.hermes/skills/writing/` | "이 글 문장 다듬어줘" |
+| **OpenClaw** | 스킬 `~/.openclaw/skills/` · `~/.agents/skills/` · 플러그인 `openclaw.plugin.json` | `/im-ai-copyeditor` · "이 글 문장 다듬어줘" |
+| **Hermes** | `~/.hermes/skills/` · tap `hermes skills tap add` | "이 글 문장 다듬어줘" |
 | **Gemini CLI** | 확장 `gemini extensions link` | `/im-ai-copyeditor` |
 
 ### 직접 클론
